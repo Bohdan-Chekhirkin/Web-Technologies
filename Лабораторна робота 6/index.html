@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калькулятор</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 50px;
+    }
+    .error {
+      color: red;
+      font-size: 0.9em;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Калькулятор</h1>
+
+  <form id="calculatorForm">
+    <input type="text" id="number1" placeholder="Перше число">
+    <input type="text" id="number2" placeholder="Друге число">
+    <button type="button" id="calculateButton">Додати</button>
+  </form>
+
+  <p class="error hidden" id="errorMessage">Будь ласка, введіть коректні числа.</p>
+  <p id="result" class="hidden">Результат: <span id="resultValue"></span></p>
+  
+  <button id="toggleButton" class="hidden">Приховати результат</button>
+
+  <script>
+    const number1Input = document.getElementById('number1');
+    const number2Input = document.getElementById('number2');
+    const calculateButton = document.getElementById('calculateButton');
+    const errorMessage = document.getElementById('errorMessage');
+    const resultParagraph = document.getElementById('result');
+    const resultValue = document.getElementById('resultValue');
+    const toggleButton = document.getElementById('toggleButton');
+
+    calculateButton.addEventListener('click', () => {
+      // Очищення попереднього повідомлення про помилку
+      errorMessage.classList.add('hidden');
+      resultParagraph.classList.add('hidden');
+      toggleButton.classList.add('hidden');
+
+      // Отримання значень полів та їх перевірка
+      const num1 = parseFloat(number1Input.value);
+      const num2 = parseFloat(number2Input.value);
+
+      if (isNaN(num1) || isNaN(num2)) {
+        errorMessage.classList.remove('hidden');
+      } else {
+        // Відображення результату
+        resultValue.textContent = num1 + num2;
+        resultParagraph.classList.remove('hidden');
+        toggleButton.classList.remove('hidden');
+        toggleButton.textContent = 'Приховати результат';
+      }
+    });
+
+    // Додавання функціоналу для кнопки приховування/відображення результату
+    toggleButton.addEventListener('click', () => {
+      if (resultParagraph.classList.contains('hidden')) {
+        resultParagraph.classList.remove('hidden');
+        toggleButton.textContent = 'Приховати результат';
+      } else {
+        resultParagraph.classList.add('hidden');
+        toggleButton.textContent = 'Показати результат';
+      }
+    });
+  </script>
+</body>
+</html>
